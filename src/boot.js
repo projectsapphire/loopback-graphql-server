@@ -17,10 +17,10 @@ module.exports = function(app, options) {
 
         const schema = getSchema(models, options);
 
-        fs.writeFileSync(
-            require('path').join(__dirname, './schema.graphql'),
-            printSchema(schema)
-        );
+//        fs.writeFileSync(
+//            require('path').join(__dirname, './schema.graphql'),
+//            printSchema(schema)
+//        );
 
         const graphiqlPath = options.graphiqlPath || '/graphiql';
         const path = options.path || '/graphql';
