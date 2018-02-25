@@ -24,6 +24,7 @@ module.exports = function(app, options) {
 
         const graphiqlPath = options.graphiqlPath || '/graphiql';
         const path = options.path || '/graphql';
+        const apiPath = options.api || '/graphql';
 
         app.use(path, bodyParser.json(), graphql.graphqlExpress(req => ({
             schema,
@@ -34,7 +35,7 @@ module.exports = function(app, options) {
         })));
 
         app.use(graphiqlPath, graphql.graphiqlExpress({
-            endpointURL: path
+            endpointURL: apiPath
         }));
 
     }
