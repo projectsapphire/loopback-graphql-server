@@ -63,13 +63,20 @@ module.exports = function getRemoteMethodMutations(model) {
                                 });
 
                                 let ctxOptions = { accessToken: context.req.accessToken }
-                                let wrap = promisify(model[method.name](...params, ctxOptions));
+                                // let wrap = promisify(model[method.name](...params, ctxOptions));
+
+                                // if (typeObj.list) {
+                                //     return connectionFromPromisedArray(wrap, args, model);
+                                // } else {
+                                //     return wrap;
+                                // }
+                                const wrap = promisify(model[method.name]);
 
                                 if (typeObj.list) {
-                                    return connectionFromPromisedArray(wrap, args, model);
-                                } else {
-                                    return wrap;
+                                      return connectionFromPromisedArray(wrap.apply(model, params), args, model);
                                 }
+
+                                return wrap.apply(model, params);
 
                             })
                             .catch((err) => {
