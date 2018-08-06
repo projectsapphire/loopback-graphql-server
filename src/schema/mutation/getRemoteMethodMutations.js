@@ -14,7 +14,7 @@ const checkAccess = require("../ACLs");
 
 const allowedVerbs = ['post', 'del', 'put', 'patch', 'all'];
 
-module.exports = function getRemoteMethodMutations(model) {
+module.exports = function getRemoteMethodMutations(model, options) {
     const hooks = {};
 
     if (model.sharedClass && model.sharedClass.methods) {
@@ -48,7 +48,7 @@ module.exports = function getRemoteMethodMutations(model) {
                     mutateAndGetPayload: (args, context) => {
 
                         let modelId = args && args.id;
-                        return checkAccess({ accessToken: context.req.accessToken, model: model, method: method, id: modelId })
+                        return checkAccess({ accessToken: context.req.accessToken, model: model, method: method, id: modelId, ctx: context, options: options })
                             .then(() => {
                                 let params = [];
 
